@@ -13,11 +13,22 @@ universal_footer = "Bot by @BigSaltyBeans, ;)"
 
 @bot.tree.command(name='spamuser', description='Ping a user a set amount of times')
 async def ping(ctx: discord.Interaction, *, user: discord.User, amount: int):
-    ctx.response.defer()
+    await ctx.response.defer()
     mention = user.id
 
     for i in range(amount):
         await ctx.channel.send(f'<@{mention}>')
+    
+    embed = discord.Embed(title='Spam Complete', description=f'Successfully pinged {user.mention} {amount} times!', color=0x00ff00)
+    embed.set_footer(text=universal_footer)
+    await ctx.followup.send(embed=embed)
+
+@bot.tree.command(name='about', description='About the bot')
+async def about(ctx: discord.Interaction):
+    await ctx.response.defer()
+    embed = discord.Embed(title='About', description='A simple spam-ping bot to annoy people! \n Please use wisely \n \n Made by BigSaltyBeans \n Source Code: [GitHub](https://github.com/LRGuess/Professional-Spammist) \n Support Server: [K-Bean Studios](https://discord.gg/D4WUX7r3)', color=0x00ff00)
+    embed.set_footer(text=universal_footer)
+    await ctx.followup.send(embed=embed)
 
 @bot.event
 async def on_ready():
